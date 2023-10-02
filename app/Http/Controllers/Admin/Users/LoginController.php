@@ -16,7 +16,7 @@ class LoginController extends Controller
     public function index()
     {
         return view('admin.users.login',[
-            'title' => 'Dang nhap he thong'
+            'title' => 'Đăng nhập hệ thống'
         ]);
     }
 
@@ -38,7 +38,7 @@ class LoginController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->input());
     }
 
     /**

@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
-
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Http\Request;
 class CategoryController extends Controller
 {
     /**
@@ -15,7 +16,12 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        //lấy dl từ db về
+        $categories = Category::all();
+        //Hiển thị view và đổ dl vào view
+        return view('categories.index',[
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -25,7 +31,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view('categories.index');
     }
 
     /**
@@ -36,7 +42,9 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        //
+        Category::create($request->all());
+        //Quay về ds
+        return Redirect::route('categories.index');
     }
 
     /**
@@ -58,7 +66,10 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return view('categories.edit', [
+            "category" => $category
+        ]);
+
     }
 
     /**
@@ -70,7 +81,9 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-        //
+        $category->update($request->all());
+        //Quay ve danh sach
+        return Redirect::route('categories.index');
     }
 
     /**
@@ -81,6 +94,8 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        //Quay ve danh sach
+        return Redirect::route('categories.index');
     }
 }
